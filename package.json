@@ -1,0 +1,14 @@
+{
+  "name": "abe-books-search",
+  "version": "0.0.1",
+  "description": "abe books book searcher",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "@dillonchr",
+  "license": "MIT",
+  "dependencies": {
+    "jsdom": "^9.8.3"
+  }
+}
