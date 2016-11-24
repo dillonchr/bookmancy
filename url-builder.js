@@ -7,7 +7,7 @@ module.exports = options => {
     url += '&an=' + encodeURIComponent(options.author);
   }
   if(options.title) {
-    url += '&n=' + encodeURIComponent(options.title);
+    url += '&tn=' + encodeURIComponent(options.title);
   }
   if(options.year && !isNaN(options.year) && options.year.length === 4) {
     url += '&yrh=' + encodeURIComponent(options.year);
