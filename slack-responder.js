@@ -1,6 +1,6 @@
 let request = require('request');
 
-module.exports = slacker = (query, searchUrl, x) => {
+module.exports = slacker = (query, searchUrl, x, slackReq) => {
     const MAX_RESULTS = 50;
     const RESULTS_LIMIT = 5;
     /**
@@ -62,10 +62,13 @@ module.exports = slacker = (query, searchUrl, x) => {
 
     return new Promise((resolve, reject) => {
         let opts = {
-            url: 'https://hooks.slack.com/services/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',
+            url: slackReq.response_url,
             method: 'POST',
             json: true,
-            body: response
+            body: response,
+            header: {
+                token: slackReq.token
+            }
         };
         request(opts,
             (err, res, body) => {
