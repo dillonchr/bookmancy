@@ -1,3 +1,5 @@
+let request = require('request');
+
 module.exports = slacker = (query, searchUrl, x) => {
     const MAX_RESULTS = 50;
     const RESULTS_LIMIT = 5;
@@ -36,11 +38,12 @@ module.exports = slacker = (query, searchUrl, x) => {
                 color: `#${hiddenResultsColor}`,
                 pretext: `Searched for \`${searchTitle}\``,
                 text: `There are ${hiddenResultsIdenifier} more results in the search above :point_up:`,
+                mrkdwn_in: ['pretext'],
                 title: `See Search Results For: ${searchTitle}`,
                 title_link: searchUrl,
                 fields: sharedResults.map(r => ({
                     short: false,
-                    title: r.price + (r.year ? ` (${r.year})`: ''),
+                    title: r.price + r.shipping + (r.year ? ` (${r.year})` : ''),
                     value: r.about.length > 120 ?
                         r.about.substr(0, 120) + '...' :
                         r.about
@@ -56,8 +59,21 @@ module.exports = slacker = (query, searchUrl, x) => {
     if (resultWithImage) {
         response.attachments[0].thumb_url = resultWithImage.image;
     }
-    /**
-     * this is directly fed to the user's browser
-     */
-    return JSON.stringify(response);
+
+    return new Promise((resolve, reject) => {
+        let opts = {
+            url: 'https://hooks.slack.com/services/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',
+            method: 'POST',
+            json: true,
+            body: response
+        };
+        request(opts,
+            (err, res, body) => {
+                console.log(res.statusCode, body);
+                if (!err && res.statusCode == 200) {
+                    resolve(body);
+                }
+                reject(err);
+            });
+    });
 };

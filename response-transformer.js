@@ -9,17 +9,20 @@ module.exports = function transformApiResponse(document) {
     }
 
     function getItemPrice(el) {
-        let itemPrice = parseFloat(el.querySelector('.item-price .price').innerHTML.substr(4));
+        return el.querySelector('.item-price .price').innerHTML.substr(4);
+    }
+
+    function getItemShipping(el) {
         let shipping = el.querySelector('.shipping .price');
         if (shipping) {
-            itemPrice += parseFloat(shipping.textContent.substr(4));
+            return ` + ${shipping.textContent.substr(4)} s/h `;
         }
-        return itemPrice;
+        return '';
     }
 
     function getItemImage(el) {
         let img = el.querySelector('.result-image img');
-        if(el.querySelector('.no-book-image') || !img) {
+        if (el.querySelector('.no-book-image') || !img) {
             return null;
         }
         return img.src;
@@ -30,6 +33,7 @@ module.exports = function transformApiResponse(document) {
                 year: getItemProp('datePublished', el),
                 about: getItemProp('about', el),
                 price: getItemPrice(el),
+                shipping: getItemShipping(el),
                 image: getItemImage(el)
             })
         );

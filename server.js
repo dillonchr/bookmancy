@@ -12,6 +12,7 @@ app.get('/search.json', (req, res) => {
 app.get('/slack.json', (req, res) => {
     let searchUrl = urlographer(req.query);
     request(searchUrl)
-        .then(x => res.send(slackResponder(req.query, searchUrl, x)), err => res.send(err.toString()));
+        .then(x => slackResponder(req.query, searchUrl, x), err => res.send(err.toString()))
+        .then(x => res.send(x), err => res.send(console.error(err)));
 });
 app.listen(process.env.PORT || 3000, () => console.log('Location confirmed. Sending supplies.'));
