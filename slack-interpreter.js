@@ -11,7 +11,7 @@ module.exports = slackInterpreter = (cmd) => {
         } else if (i === 2) {
             request.publisher = val;
         } else if (i === 3) {
-            request.year = val;
+            request[isNaN(val) ? 'format' : 'year'] = val;
         } else if (i === 4) {
             request.format = val;
         }

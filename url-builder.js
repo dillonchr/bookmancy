@@ -14,9 +14,9 @@ module.exports = options => {
   }
   let format = '0';
   if(options.format) {
-    if(options.format === 'hardcover') {
+    if(/hardcover|hardback/i.test(options.format)) {
       format = 'h';
-    } else if(options.format === 'softcover') {
+    } else if(/softcover|paperback|pb/i.text(options.format)) {
       format = 's';
     }
   }
