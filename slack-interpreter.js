@@ -1,5 +1,5 @@
 module.exports = slackInterpreter = (cmd) => {
-    let query = cmd.split(' ').slice(1);
+    let query = cmd.split(' ');
     let request = {};
     let i = query.length;
     while (i--) {
