@@ -62,12 +62,12 @@ module.exports = slacker = (query, searchUrl, x, slackReq) => {
 
     return new Promise((resolve, reject) => {
         let opts = {
-            url: slackReq.response_url,
+            url: slackReq.body.response_url,
             method: 'POST',
             json: true,
             body: response,
             header: {
-                token: slackReq.token
+                token: slackReq.body.token
             }
         };
         request(opts,
