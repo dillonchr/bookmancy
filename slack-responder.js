@@ -51,7 +51,7 @@ module.exports = slacker = (query, searchUrl, x, slackReq) => {
 
     sharedResults.map(r => ({
         color: `#${hiddenResultsColor}`,
-        title: r.price + r.shipping + (r.year ? ` (${r.year})` : ''),
+        title: '$' + r.price + r.shipping + (r.year ? ` (${r.year})` : ''),
         text: r.about.length > 120 ?
             r.about.substr(0, 120) + '...' :
             r.about,

@@ -15,7 +15,7 @@ module.exports = function transformApiResponse(document) {
     function getItemShipping(el) {
         let shipping = el.querySelector('.shipping .price');
         if (shipping) {
-            return ` + ${shipping.textContent.substr(4)} s/h `;
+            return ` + $${shipping.textContent.substr(4)} s/h `;
         }
         return '';
     }
