@@ -14,8 +14,7 @@ app.get('/search.json', (req, res) => {
 });
 app.post('/slack.json', (req, res) => {
     try {
-        console.log(Object.keys(req.body));
-        let query = slackInterpreter(req.body.command);
+        let query = slackInterpreter(req.body.text);
         let searchUrl = urlographer(query);
         request(searchUrl)
             .then(x => slackResponder(query, searchUrl, x, req), err => console.error(err.toString()));
