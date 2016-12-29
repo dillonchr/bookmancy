@@ -32,33 +32,34 @@ module.exports = slacker = (query, searchUrl, x, slackReq) => {
      * @type {{attachments: [*]}}
      */
     let response = {
+        response_type: 'in_channel',
+        text: `Searched for \`${searchTitle}\``,
+        mrkdown: true,
         attachments: [
             {
                 author_name: "Bookmancy Price Results",
                 color: `#${hiddenResultsColor}`,
-                pretext: `Searched for \`${searchTitle}\``,
                 text: `There are ${hiddenResultsIdenifier} more results in the search above :point_up:`,
-                mrkdwn_in: ['pretext'],
                 title: `See Search Results For: ${searchTitle}`,
                 title_link: searchUrl,
-                fields: sharedResults.map(r => ({
-                    short: false,
-                    title: r.price + r.shipping + (r.year ? ` (${r.year})` : ''),
-                    value: r.about.length > 120 ?
-                        r.about.substr(0, 120) + '...' :
-                        r.about
-                })),
-                fallback: searchTitle + sharedResults.map(r => r.price).join(' :: '),
                 footer: 'AbeBooks API',
                 footer_icon: 'https://www.abebooks.com/images/gateway/heroes/bookbird-avatar.png',
                 ts: Math.floor(new Date().getTime() / 1000)
             }
         ]
     };
-    let resultWithImage = x.find(r => !!r.image);
-    if (resultWithImage) {
-        response.attachments[0].thumb_url = resultWithImage.image;
-    }
+
+    sharedResults.map(r => ({
+        color: `#${hiddenResultsColor}`,
+        title: r.price + r.shipping + (r.year ? ` (${r.year})` : ''),
+        text: r.about.length > 120 ?
+            r.about.substr(0, 120) + '...' :
+            r.about,
+        fallback: r.price,
+        thumb_url: r.image
+    }))
+        .forEach(r => response.attachments.push(r));
+
 
     return new Promise((resolve, reject) => {
         let opts = {
