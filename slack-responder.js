@@ -72,8 +72,7 @@ module.exports = slacker = (query, searchUrl, x, slackReq) => {
         };
         request(opts,
             (err, res, body) => {
-                console.log(res.statusCode, body);
-                if (!err && res.statusCode == 200) {
+                if (!err && res && res.statusCode == 200) {
                     resolve(body);
                 }
                 reject(err);
