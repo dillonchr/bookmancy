@@ -14,6 +14,14 @@ app.get('/search.json', (req, res) => {
 });
 app.post('/slack.json', (req, res) => {
     try {
+        if(req.body.text === 'help') {
+            return res.send({
+                response_type: 'ephemeral',
+                text: 'search for book prices with `author, title, publisher, year, format`',
+                mrkdown: true
+            });
+        }
+
         let query = slackInterpreter(req.body.text);
         let searchUrl = urlographer(query);
         request(searchUrl)

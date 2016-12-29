@@ -1,20 +1,20 @@
 module.exports = slackInterpreter = (cmd) => {
-    let query = cmd.split(' ');
+    let query = cmd.split(',');
     let request = {};
     let i = query.length;
     while (i--) {
+        let val = query[i].trim();
         if (i === 0) {
-            request.author = query[i];
+            request.author = val;
         } else if (i === 1) {
-            request.title = query[i];
+            request.title = val;
         } else if (i === 2) {
-            request.publisher = query[i];
+            request.publisher = val;
         } else if (i === 3) {
-            request.year = query[i];
+            request.year = val;
         } else if (i === 4) {
-            request.format = query[i];
+            request.format = val;
         }
     }
-    console.log("\\\\", cmd, "===>", request, "//");
     return request;
 };
