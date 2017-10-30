@@ -1,8 +1,8 @@
 module.exports = function transformApiResponse(document) {
-    let searchResults = document.querySelectorAll('.cf.result');
+    const searchResults = document.querySelectorAll('.cf.result');
 
     function getItemProp(name, elem) {
-        let metaTag = elem.querySelector('meta[itemprop="' + name + '"]');
+        const metaTag = elem.querySelector('meta[itemprop="' + name + '"]');
         if (metaTag) {
             return metaTag.getAttribute('content');
         }
@@ -13,16 +13,16 @@ module.exports = function transformApiResponse(document) {
     }
 
     function getItemShipping(el) {
-        let shipping = el.querySelector('.shipping .price');
+        const shipping = el.querySelector('.shipping .price');
         if (shipping) {
-            return ` + $${shipping.textContent.substr(4)} s/h `;
+            return shipping.textContent.substr(4);
         }
         return '';
     }
 
     function getItemImage(el) {
-        let img = el.querySelector('.result-image img');
-        if (el.querySelector('.no-book-image') || !img) {
+        const img = el.querySelector('.result-image img');
+        if (img.className.includes('no-book-image') || !img) {
             return null;
         }
         return img.src;

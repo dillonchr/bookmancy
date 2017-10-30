@@ -14,9 +14,9 @@ module.exports = options => {
   }
   let format = '0';
   if(options.format) {
-    if(/hardcover|hardback/i.test(options.format)) {
+    if(/hardcover|hardback|hc|h/i.test(options.format)) {
       format = 'h';
-    } else if(/softcover|paperback|pb/i.test(options.format)) {
+    } else if(/softcover|paperback|pb|p/i.test(options.format)) {
       format = 's';
     }
   }

@@ -6,7 +6,6 @@ module.exports = url => {
     jsdom.env(url, (err, window) => {
       if(!err) {
         let results = transformApiResponse(window.document);
-        console.log(`loaded up ${results.length} results`);
         resolve(results);
       } else {
         console.log('nope', err);
