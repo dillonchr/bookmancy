@@ -1,8 +1,8 @@
 {
-  "name": "abe-books-search",
+  "name": "bookmancy",
   "version": "0.0.1",
   "description": "abe books book searcher",
-  "main": "server.js",
+  "main": "index.js",
   "engines": {
     "node": "7.2.0"
   },
@@ -12,7 +12,6 @@
   "author": "@dillonchr",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "jsdom": "^9.8.3",
+    "jsdom": "^9.8.3"
   }
 }
