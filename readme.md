@@ -2,20 +2,32 @@
 > a **brilliant** new way to search for book prices
 
 ## Overview
-Bookmancy is a self-sufficient node app that delivers a mobile friendly gui to quickly, and concisely search `abebooks.com` search results.
+Bookmancy is a small module to scrape `abebooks.com` search results for consumption in a node environment.
 
-## Use
-* `npm install`
-* `npm start`
-* Go to `localhost:3000/`
-
-## */search.json*
-`GET`ting this URL will trigger the search. Following are the supported querystring parameters.
-
-* `title` - *String* - The title of the Bookmancy
+## *`search({author, title, publisher, format, year})`*
+* `title` - *String* - The title of the book
 * `author` - *String* - The author or editor of the book. Basically anything that a seller would potentially put as the author.
 * `publisher` - *String* - The name of the publisher
-* `year` - *Number* - Four digit maximum year
+* `format` - *String* - options include [hardback, hardcover, softcover, paperback, h, p]
+* `year` - *Number* - Four digit year, filters books published `<=year`
 
-## Coming soon
-The gui part. Heh.
+### Returns
+```javascript
+{
+    url: 'https://abebooks...',
+    retults: [
+        {
+            about,
+            price,
+            shipping,
+            image,
+            year
+        }...
+    ]
+}
+```
+* `about` - *String* - The description from the listing
+* `price` - *String* - Unformatted price
+* `shipping` - *String|Null* - Unformatted shipping price
+* `image` - *String|Null* - URL for photo
+* `year` - *String|Null* - Year work was published in listing
