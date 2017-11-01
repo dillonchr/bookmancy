@@ -38,6 +38,8 @@ module.exports = {
             }, 'https://www.abebooks.com/servlet/SearchResults?bx=off&ds=50&recentlyadded=all&sortby=17&sts=t');
     },
     search(opts) {
-        return this.request(this.getUrl(opts));
+        const url = this.getUrl(opts);
+        return this.request(url)
+            .then(results => ({results, url}));
     }
 };
