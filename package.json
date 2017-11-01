@@ -1,6 +1,6 @@
 {
   "name": "bookmancy",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "abe books book price scraper",
   "main": "src/abe/search-abe.js",
   "repository": "dillonchr/bookmancy",
