@@ -1,6 +1,6 @@
 {
   "name": "bookmancy",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "abe books book searcher",
   "main": "src/abe/search-abe.js",
   "engines": {
