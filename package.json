@@ -2,13 +2,11 @@
   "name": "bookmancy",
   "version": "0.0.1",
   "description": "abe books book searcher",
-  "main": "index.js",
+  "main": "src/abe/search-abe.js",
   "engines": {
     "node": "7.2.0"
   },
-  "scripts": {
-    "start": "node server.js"
-  },
+  "scripts": {},
   "author": "@dillonchr",
   "license": "MIT",
   "dependencies": {
