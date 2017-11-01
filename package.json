@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "description": "abe books book price scraper",
   "main": "src/abe/search-abe.js",
-  "homepage": "https://github.com/dillonchr/bookmancy",
+  "repository": "dillonchr/bookmancy",
   "scripts": {},
   "author": "dillonchr <j.dillon.christensen@gmail.com>",
   "license": "GPL-2.0",
