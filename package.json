@@ -1,21 +1,15 @@
 {
-  "name": "abe-books-search",
-  "version": "0.0.1",
+  "name": "bookmancy",
+  "version": "0.0.2",
   "description": "abe books book searcher",
-  "main": "server.js",
+  "main": "src/abe/search-abe.js",
   "engines": {
     "node": "7.2.0"
   },
-  "scripts": {
-    "start": "node server.js"
-  },
+  "scripts": {},
   "author": "@dillonchr",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0",
-    "jsdom": "^9.8.3",
-    "vue": "^2.1.3",
-    "webpack": "^1.13.3"
+    "jsdom": "^9.8.3"
   }
 }
