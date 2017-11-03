@@ -17,27 +17,35 @@ const _getUrl = opts => {
     return Object.keys(opts)
         .reduce((coll, key) => {
             const val = opts[key];
-            if (key === 'publisher') {
-                return coll + '&pn=' + encodeURIComponent(val);
+            let next = '';
+            switch(key) {
+                case 'publisher':
+                    next = '&pn=' + encodeURIComponent(val);
+                    break;
+                case 'author': 
+                    next = '&an=' + encodeURIComponent(val);
+                    break;
+                case 'title':
+                    next = '&tn=' + encodeURIComponent(val);
+                    break;
+                case 'year':
+                    if(val.length === 4 && !isNaN(val)) {
+                        next = '&yrh=' + val;
+                    }
+                    break;
+                case 'format':
+                    next = '&bi=' + (_isHardcover(val) ? 'h' : _isSoftcover(val) ? 's' : '0');
+                    break;
             }
-            if (key === 'author') {
-                return coll + '&an=' + encodeURIComponent(val);
-            }
-            if (key === 'title') {
-                return coll + '&tn=' + encodeURIComponent(val);
-            }
-            if (key === 'year' && val.length === 4 && !isNaN(val)) {
-                return coll + '&yrh=' + val;
-            }
-            if (key === 'format') {
-                return coll + '&bi=' + (_isHardcover(val) ? 'h' : _isSoftcover(val) ? 's' : '0');
-            }
-           return coll;
+            return coll + next;
         }, 'https://www.abebooks.com/servlet/SearchResults?bx=off&ds=50&recentlyadded=all&sortby=17&sts=t');
 };
 
 module.exports = {
     search(opts) {
+        return _request(_getUrl(opts));
+    },
+    searchWithUrlInResponse(opts) {
         const url = _getUrl(opts);
         return _request(url)
             .then(results => ({results, url}));
