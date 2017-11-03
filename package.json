@@ -1,13 +1,14 @@
 {
   "name": "bookmancy",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "abe books book price scraper",
-  "main": "src/abe/search-abe.js",
+  "main": "src/index.js",
   "repository": "dillonchr/bookmancy",
   "scripts": {},
   "author": "dillonchr <j.dillon.christensen@gmail.com>",
   "license": "GPL-2.0",
   "dependencies": {
+    "dotenv": "^4.0.0",
     "jsdom": "^9.8.3"
   }
 }
