@@ -4,7 +4,9 @@
   "description": "abe books book price scraper",
   "main": "src/index.js",
   "repository": "dillonchr/bookmancy",
-  "scripts": {},
+  "scripts": {
+    "test": "tape tests/**/*.test.js"
+  },
   "author": "dillonchr <j.dillon.christensen@gmail.com>",
   "license": "GPL-2.0",
   "dependencies": {
