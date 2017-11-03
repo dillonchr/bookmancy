@@ -9,9 +9,6 @@
   "license": "GPL-2.0",
   "dependencies": {
     "dotenv": "^4.0.0",
-    "jsdom": "^9.8.3",
-    "request": "^2.83.0",
-    "request-promise-native": "^1.0.5"
-  },
+    "jsdom": "^9.8.3"
   }
 }
