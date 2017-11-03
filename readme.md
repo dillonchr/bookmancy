@@ -53,6 +53,13 @@ bookmancy.abe.searchWithUrlInResponse({author: 'August Derleth', publisher: 'Myc
 ```
 
 ## *ebay* - ebay Search
+## REQUIRES ebay API key
+All ebay requests take place with their actual API. So you will [need to register](https://developer.ebay.com/join/) to add an application and get your keys. Once you have your key you will need to be sure to include the key in your project's `.env` file:
+```
+EBAY_API_KEY=xxxxxxxxxxxxxxxxxxx
+```
+Failure to include this key will result in all search calls rejecting with an error highlighting that this step must be completed.
+
 ### Methods
 
 ### *`search(query)`* - Search both sold and live listings
