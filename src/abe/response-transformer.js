@@ -1,3 +1,4 @@
+const toResult = require('../result-model');
 const _getItemProp = (name, elem) => {
     const metaTag = elem.querySelector('meta[itemprop="' + name + '"]');
     if (metaTag) {
@@ -31,7 +32,7 @@ const _getItemImage = el => {
 
 module.exports = document => {
     return Array.from(document.querySelectorAll('.cf.result'))
-        .map(el => ({
+        .map(el => toResult({
                 year: _getItemProp('datePublished', el),
                 about: _getItemProp('about', el),
                 price: _getItemPrice(el),

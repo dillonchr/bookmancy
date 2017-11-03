@@ -1,5 +1,6 @@
 require('dotenv').config();
 const http = require('http');
+const toResult = require('../result-model');
 const API_KEY = process.env.EBAY_API_KEY;
 const SELLING_STATUSES = {
     SOLD: 'EndedWithSales',
@@ -47,16 +48,20 @@ const _transformEbayResponse = listings => {
         .filter(l => !!l.galleryURL && l.galleryURL.length && sellingStatuses.includes(l.sellingStatus[0].sellingState[0]))
         .map(l => {
             const [ about ] = l.title;
-            const price = Math.round(parseFloat(l.sellingStatus[0].convertedCurrentPrice[0].__value__));
+            const price = ~~parseFloat(l.sellingStatus[0].convertedCurrentPrice[0].__value__);
+            console.log(l.shippingInfo);
+            const [{shippingServiceCost}] = l.shippingInfo;
+            const shipping = shippingServiceCost ? +shippingServiceCost[0].__value__ === 0 ? 'Free' : ~~shippingServiceCost[0].__value__ : '';
 
-            return {
+            return toResult({
                 about,
                 price,
                 image: l.galleryURL[0],
                 sold: SELLING_STATUSES.SOLD === l.sellingStatus[0].sellingState[0],
                 url: l.viewItemURL[0],
-                date: ~~(new Date(l.listingInfo[0].endTime[0]).getTime() / 1000)
-            };
+                date: ~~(new Date(l.listingInfo[0].endTime[0]).getTime() / 1000),
+                shipping
+            });
         });
 };
 
