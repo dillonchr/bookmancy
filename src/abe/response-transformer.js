@@ -6,6 +6,11 @@ const _getItemProp = (name, elem) => {
     }
 };
 
+const _getUrl = el => {
+    const a = el.querySelector('[itemprop="url"]');
+    return a && `https://www.abebooks.com${a.getAttribute('href')}`;
+}
+
 const _getItemPrice = el => {
     const price = el.querySelector('.item-price .price');
     if (price) {
@@ -37,6 +42,7 @@ module.exports = document => {
                 about: _getItemProp('about', el),
                 price: _getItemPrice(el),
                 shipping: _getItemShipping(el),
-                image: _getItemImage(el)
+                image: _getItemImage(el),
+                url: _getUrl(el)
             }));
 };
