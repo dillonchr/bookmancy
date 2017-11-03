@@ -1,18 +1,8 @@
-const jsdom = require('jsdom');
+const { JSDOM } = require('jsdom');
 const transformResponse = require('./response-transformer');
 const _isHardcover = n => /hardcover|hardback|^hb$|^hc$|^h$/i.test(n);
 const _isSoftcover = n => /softcover|paperback|^pb$|^p$|^s$/i.test(n);
-const _request = url => {
-    return new Promise((res, rej) => {
-        jsdom.env(url, (err, w) => {
-            if(!err) {
-                res(transformResponse(w.document));
-            } else {
-                rej(err);
-            }
-        });
-    });
-};
+const _request = url => JSDOM.fromURL(url).then(dom => transformResponse(dom.window.document));
 const _getUrl = opts => {
     return Object.keys(opts)
         .reduce((coll, key) => {
