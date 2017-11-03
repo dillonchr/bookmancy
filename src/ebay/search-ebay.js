@@ -37,6 +37,9 @@ const _buildApiUrl = ({controller, filters = [], q}) => {
     return `http://svcs.ebay.com/services/search/FindingService/v1?callback=fn&OPERATION-NAME=${controller}&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=${API_KEY}&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD${filtersQuery}&paginationInput.entriesPerPage=100&sortOrder=PricePlusShippingHighest&categoryId=267&keywords=${encodeURIComponent(q)}`;
 };
 const _apiFetch = options => {
+    if (!API_KEY) {
+        return Promise.reject(new Error('Missing EBAY_API_KEY in .env'));
+    }
     return _request(_buildApiUrl(options))
         .then(_transformEbayResponse);
 };
@@ -49,7 +52,6 @@ const _transformEbayResponse = listings => {
         .map(l => {
             const [ about ] = l.title;
             const price = ~~parseFloat(l.sellingStatus[0].convertedCurrentPrice[0].__value__);
-            console.log(l.shippingInfo);
             const [{shippingServiceCost}] = l.shippingInfo;
             const shipping = shippingServiceCost ? +shippingServiceCost[0].__value__ === 0 ? 'Free' : ~~shippingServiceCost[0].__value__ : '';
 
