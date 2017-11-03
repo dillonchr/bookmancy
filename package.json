@@ -8,6 +8,10 @@
   "author": "dillonchr <j.dillon.christensen@gmail.com>",
   "license": "GPL-2.0",
   "dependencies": {
-    "jsdom": "^9.8.3"
+    "dotenv": "^4.0.0",
+    "jsdom": "^9.8.3",
+    "request": "^2.83.0",
+    "request-promise-native": "^1.0.5"
+  },
   }
 }
