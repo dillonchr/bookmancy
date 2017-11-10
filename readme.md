@@ -1,4 +1,6 @@
 # Bookmancy
+[![npm package](https://nodei.co/npm/bookmancy.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/request/)
+[![circleci](https://circleci.com/gh/dillonchr/bookmancy.png?circle-token=3abec151a8d662a147e246d4ce022a998d7aa2af)]
 > a **brilliant** new way to search for book prices
 
 ## Overview
