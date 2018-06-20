@@ -1,3 +1,4 @@
+![supposed to be a book on a wizard's staff](bookmancy.png)
 # Bookmancy
 
 ## Overview
