@@ -1,4 +1,5 @@
 const http = require('http');
+const async = require('async');
 const getUrl = require('./url.js');
 const transformResponse = require('./response-transformer.js');
 
@@ -22,10 +23,23 @@ const apiFetch = (options, callback) => {
 
 module.exports = (options, callback) => {
     try {
-        apiFetch(options, callback);
+        if (!!options.sold === !!options.live) {
+            async.series([
+                fn => apiFetch({...options, sold: false, live: true}, fn),
+                fn => apiFetch({...options, sold: true, live: false}, fn)
+            ], (err, superResults) => {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null, superResults.reduce((collection, results) => {
+                        return collection.concat(results);
+                    }, []));
+                }
+            });
+        } else {
+            apiFetch(options, callback);
+        }
     } catch (err) {
         callback(err);
     }
 };
-
-module.exports({author: 'capote', publisher: 'random', title: 'in cold blood', year: 1965, includeUrl: true}, console.log.bind(this, 'RES'));

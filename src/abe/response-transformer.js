@@ -1,4 +1,4 @@
-const toResult = require('../result-model');
+const toResult = require('../result-model.js');
 
 const getItemProp = (name, elem) => {
     const metaTag = elem.querySelectorAll('meta').find(m => m.attributes.itemprop && m.attributes.itemprop === name);

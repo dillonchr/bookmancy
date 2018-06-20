@@ -1,9 +1,12 @@
 {
-  "name": "bookmancy",
-  "version": "1.0.3",
+  "name": "@dillonchr/bookmancy",
+  "version": "2.0.0",
   "description": "abe books book price scraper",
   "main": "src/index.js",
-  "repository": "dillonchr/bookmancy",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dillonchr/bookmancy.git"
+  },
   "scripts": {
     "test": "echo 0"
   },
@@ -13,5 +16,9 @@
     "@dillonchr/domget": "^1.0.0",
     "async": "^2.6.1"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "bugs": {
+    "url": "https://github.com/dillonchr/bookmancy/issues"
+  },
+  "homepage": "https://github.com/dillonchr/bookmancy#readme"
 }
