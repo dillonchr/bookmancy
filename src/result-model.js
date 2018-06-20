@@ -9,4 +9,6 @@ const MODEL = {
     shipping: ''
 };
 
-module.exports = r => Object.assign({}, MODEL, r);
+module.exports = (result) => {
+    return {...MODEL, ...result};
+};
