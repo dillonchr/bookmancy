@@ -1,41 +1,40 @@
 # Bookmancy
-[![npm package](https://nodei.co/npm/bookmancy.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/bookmancy)
-
-![circleci](https://circleci.com/gh/dillonchr/bookmancy.png?circle-token=3abec151a8d662a147e246d4ce022a998d7aa2af)
 
 ## Overview
 Bookmancy is a small module to scrape `abebooks.com` search results and ebay book search results for consumption in a node environment.
 
-## *`abe`* - AbeBooks search
-### Methods
+## Install
+`npm i @dillonchr/bookmancy`
 
-### *`search({author, title, publisher, format, year})`*
+
+## *`abe`* - AbeBooks search
+
+### *`abe({author, title, publisher, format, year, includeUrl})`*
 * `title` - *String* - The title of the book
 * `author` - *String* - The author or editor of the book. Basically anything that a seller would potentially put as the author.
 * `publisher` - *String* - The name of the publisher
 * `format` - *String* - options include [hardback, hardcover, softcover, paperback, h, p]
 * `year` - *Number* - Four digit year, filters books published `<=year`
+* `includeUrl` - *Boolean* - optional, will append a url prop to the response object for continuing the search manually
 
 #### Returns
 ```javascript
-[
-    <BookResult>...
-]
+{
+    results: [
+        <BookResult>...
+    ]
+}
 ```
 
 #### Example
 ```javascript
 const bookmancy = require('bookmancy');
-bookmancy.abe.search({author: 'August Derleth', publisher: 'Mycroft'})
-    .then(results => {
-
-    });
+bookmancy.abe({author: 'August Derleth', publisher: 'Mycroft'}, (err, data) => {
+    console.log(err || data.results.length);
+});
 ```
 
-### *`searchWithUrlInResponse({author, title, publisher, format, year})`*
-Argument options are the same as above, but the resolved value is different. It will include the URL that was scraped in case you wish to actually view the page for yourself in your app.
-
-#### Returns
+#### Returns (with `includeUrl: true` option)
 ```javascript
 {
     url: 'https://abebooks...',
@@ -45,14 +44,6 @@ Argument options are the same as above, but the resolved value is different. It 
 }
 ```
 
-#### Example
-```javascript
-const bookmancy = require('bookmancy');
-bookmancy.abe.searchWithUrlInResponse({author: 'August Derleth', publisher: 'Mycroft'})
-    .then(results => {
-        
-    });
-```
 
 ## *ebay* - ebay Search
 ## REQUIRES ebay API key
@@ -60,37 +51,37 @@ All ebay requests take place with their actual API. So you will [need to registe
 ```
 EBAY_API_KEY=xxxxxxxxxxxxxxxxxxx
 ```
-Failure to include this key will result in all search calls rejecting with an error highlighting that this step must be completed.
 
-### Methods
+Failure to include this key will result in all search calls throwing an error highlighting that this step must be completed.
 
-### *`search(query)`* - Search both sold and live listings
-This will search two APIs. The sold items, and current items API will be merged and sorted by price.
-To get specific results use one of the following methods.
+### *`ebay({author, title, publisher, year, sold, live})`*
+* `title` - *String* - The title of the book
+* `author` - *String* - The author or editor of the book. Basically anything that a seller would potentially put as the author.
+* `publisher` - *String* - The name of the publisher
+* `year` - *Number* - Four digit year, filters books published `<=year`
+* `sold` - *Boolean* - search for sold listings
+* `live` - *Boolean* - search for live listings
 
-* `query` - *String* - Generic query. Best bet for ebay right now. No relevant metrics are tracked/searchable (to my knowledge) in the ebay API.
+Note: `author`, `title`, `publisher`, `year` will be joined with spaces and searched against the API. eBay doesn't have a way to search for specific authors, titles, publishers, or publication years.
+
+The `sold` and `live` properties are booleans. If you omit both, then the results returned will be from both sold and live listing searches. Otherwise whichever ones are true will be searched and returned.
 
 #### Returns
 ```javascript
-[
-    <BookResult>...
-]
+{
+    results: [
+        <BookResult>...
+    ]
+}
 ```
 
 #### Example
 ```javascript
 const bookmancy = require('bookmancy');
-bookmancy.ebay.search('August Derleth Mycroft')
-    .then(results => {
-        
-    });
+bookmancy.ebay({author: 'August Derleth', publisher: 'Mycroft'}, (err, data) => {
+    console.log(err || data.results.length);
+});
 ```
-
-### *`searchLiveListings(query)`*
-Same as search, but only for current listings. *Caution:* this usually has unrealistically high prices at the top of the list. Usually we use this one to verify a book is hard to come by.
-
-### *`searchSoldListings(query)`*
-Same as search, but only for listings that have completed with sales. Note that the price on the result might not necessarily be correct. (e.g. _Buy It Now_ vs. Accepted Offer price) But this generally is good enough to know how popular something is and gives a very good idea of how easy it should be to flip.
 
 ## *`BookResult`* - Not available on export, but is the structure for results from both searches
 * `about` - *String* - The description from the listing

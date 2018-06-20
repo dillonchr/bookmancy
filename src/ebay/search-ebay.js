@@ -12,7 +12,7 @@ const apiFetch = (options, callback) => {
                 try {
                     const data = body.trim();
                     const parsed = JSON.parse(data.substr(7, data.length - 8));
-                    callback(null, transformResponse(parsed));
+                    callback(null, {results: transformResponse(parsed)});
                 } catch (err) {
                     callback(err);
                 }
@@ -23,6 +23,8 @@ const apiFetch = (options, callback) => {
 
 module.exports = (options, callback) => {
     try {
+        options.sold = options.hasOwnProperty('sold') ? !!options.sold : true;
+        options.live = options.hasOwnProperty('live')
         if (!!options.sold === !!options.live) {
             async.series([
                 fn => apiFetch({...options, sold: false, live: true}, fn),
@@ -31,9 +33,10 @@ module.exports = (options, callback) => {
                 if (err) {
                     callback(err);
                 } else {
-                    callback(null, superResults.reduce((collection, results) => {
-                        return collection.concat(results);
-                    }, []));
+                    const results = superResults.reduce((collection, data) => {
+                        return collection.concat(data.results);
+                    }, []);
+                    callback(null, {results});
                 }
             });
         } else {
