@@ -1,17 +1,18 @@
 const toResult = require('../result-model');
-const _getItemProp = (name, elem) => {
-    const metaTag = elem.querySelector('meta[itemprop="' + name + '"]');
+
+const getItemProp = (name, elem) => {
+    const metaTag = elem.querySelectorAll('meta').find(m => m.attributes.itemprop && m.attributes.itemprop === name);
     if (metaTag) {
-        return metaTag.getAttribute('content');
+        return metaTag.attributes.content;
     }
 };
 
-const _getUrl = el => {
+const getUrl = el => {
     const a = el.querySelector('[itemprop="url"]');
-    return a && `https://www.abebooks.com${a.getAttribute('href')}`;
+    return a && `https://www.abebooks.com${a.attributes.href}`;
 }
 
-const _getItemPrice = el => {
+const getItemPrice = el => {
     const price = el.querySelector('.item-price .price');
     if (price) {
         return price.innerHTML.substr(4);
@@ -19,30 +20,30 @@ const _getItemPrice = el => {
     return '???';
 };
 
-const _getItemShipping = el => {
+const getItemShipping = el => {
     const shipping = el.querySelector('.shipping .price');
     if (shipping) {
-        return shipping.textContent.substr(4);
+        return shipping.text.substr(4);
     }
     return '';
 };
 
-const _getItemImage = el => {
+const getItemImage = el => {
     const img = el.querySelector('.result-image img');
-    if (img.className.includes('no-book-image') || !img) {
+    if (img.classNames.includes('no-book-image') || !img) {
         return null;
     }
-    return img.src;
+    return img.attributes.src;
 };
 
-module.exports = document => {
-    return Array.from(document.querySelectorAll('.cf.result'))
+module.exports = (document) => {
+    return document.querySelectorAll('.cf.result')
         .map(el => toResult({
-                year: _getItemProp('datePublished', el),
-                about: _getItemProp('about', el),
-                price: _getItemPrice(el),
-                shipping: _getItemShipping(el),
-                image: _getItemImage(el),
-                url: _getUrl(el)
+                year: getItemProp('datePublished', el),
+                about: getItemProp('about', el),
+                price: getItemPrice(el),
+                shipping: getItemShipping(el),
+                image: getItemImage(el),
+                url: getUrl(el)
             }));
 };

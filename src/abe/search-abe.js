@@ -1,43 +1,19 @@
-const { JSDOM } = require('jsdom');
-const transformResponse = require('./response-transformer');
-const _isHardcover = n => /hardcover|hardback|^hb$|^hc$|^h$/i.test(n);
-const _isSoftcover = n => /softcover|paperback|^pb$|^p$|^s$/i.test(n);
-const _request = url => JSDOM.fromURL(url).then(dom => transformResponse(dom.window.document));
-const _getUrl = opts => {
-    return Object.keys(opts)
-        .reduce((coll, key) => {
-            const val = opts[key];
-            let next = '';
-            switch(key) {
-                case 'publisher':
-                    next = '&pn=' + encodeURIComponent(val);
-                    break;
-                case 'author': 
-                    next = '&an=' + encodeURIComponent(val);
-                    break;
-                case 'title':
-                    next = '&tn=' + encodeURIComponent(val);
-                    break;
-                case 'year':
-                    if(val.length === 4 && !isNaN(val)) {
-                        next = '&yrh=' + val;
-                    }
-                    break;
-                case 'format':
-                    next = '&bi=' + (_isHardcover(val) ? 'h' : _isSoftcover(val) ? 's' : '0');
-                    break;
-            }
-            return coll + next;
-        }, 'https://www.abebooks.com/servlet/SearchResults?bx=off&ds=50&recentlyadded=all&sortby=17&sts=t');
-};
+const domget = require('@dillonchr/domget');
+const transformResponse = require('./response-transformer.js');
+const getUrl = require('./url.js');
 
-module.exports = {
-    search(opts) {
-        return _request(_getUrl(opts));
-    },
-    searchWithUrlInResponse(opts) {
-        const url = _getUrl(opts);
-        return _request(url)
-            .then(results => ({results, url}));
-    }
+module.exports = (options, callback) => {
+    const url = getUrl(options);
+    domget(url, (err, dom) => {
+        if (err) {
+            callback(err);
+        } else {
+            const results = transformResponse(dom);
+            const abeResults = {results};
+            if (options.includeUrl) {
+                abeResults.url = url;
+            }
+            callback(null, abeResults);     
+        }
+    });
 };
