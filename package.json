@@ -10,8 +10,8 @@
   "author": "dillonchr <j.dillon.christensen@gmail.com>",
   "license": "GPL-2.0",
   "dependencies": {
-    "@dillonchr/domget": "^1.0.0"
+    "@dillonchr/domget": "^1.0.0",
+    "async": "^2.6.1"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
