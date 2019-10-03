@@ -14,6 +14,7 @@
   "license": "GPL-2.0",
   "dependencies": {
     "@dillonchr/domget": "^1.0.0",
+    "@dillonchr/fetch": "^1.0.1",
     "async": "^2.6.1"
   },
   "devDependencies": {},
