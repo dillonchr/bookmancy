@@ -26,5 +26,5 @@ module.exports = (options) => {
             return `${str}${v}.name=${name}${v}.value=${value}`;
         }, '');
 
-    return `http://svcs.ebay.com/services/search/FindingService/v1?callback=fn&OPERATION-NAME=${controller}&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=${process.env.EBAY_API_KEY}&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD${filtersQuery}&paginationInput.entriesPerPage=100&sortOrder=PricePlusShippingHighest&categoryId=267&keywords=${encodeURIComponent(q)}`;
+    return `http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=${controller}&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=${process.env.EBAY_API_KEY}&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD${filtersQuery}&paginationInput.entriesPerPage=100&sortOrder=PricePlusShippingHighest&categoryId=267&keywords=${encodeURIComponent(q)}`;
 };
