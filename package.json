@@ -8,7 +8,7 @@
     "url": "git+https://github.com/dillonchr/bookmancy.git"
   },
   "scripts": {
-    "test": "echo 0"
+    "test": "tape test/**/*.js"
   },
   "author": "dillonchr <j.dillon.christensen@gmail.com>",
   "license": "GPL-2.0",
@@ -17,7 +17,9 @@
     "@dillonchr/fetch": "^1.0.1",
     "async": "^2.6.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "tape": "^4.13.0"
+  },
   "bugs": {
     "url": "https://github.com/dillonchr/bookmancy/issues"
   },
