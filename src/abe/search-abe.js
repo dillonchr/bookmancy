@@ -13,7 +13,7 @@ module.exports = (options, callback) => {
             if (options.includeUrl) {
                 abeResults.url = url;
             }
-            callback(null, abeResults);     
+            callback(null, abeResults);
         }
     });
 };

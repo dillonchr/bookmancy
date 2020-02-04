@@ -34,7 +34,7 @@ const getItemShipping = el => {
 
 const getItemImage = el => {
     const img = el.querySelector('.result-image img');
-    if (img.classNames.includes('no-book-image') || !img) {
+    if (!img || !img.classNames.includes('no-book-image')) {
         return null;
     }
     return img.attributes.src;
