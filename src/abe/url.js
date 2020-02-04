@@ -18,7 +18,7 @@ module.exports = (opts) => {
                     next = '&tn=' + encodeURIComponent(val);
                     break;
                 case 'year':
-                    if(val.length === 4 && !isNaN(val)) {
+                    if(!isNaN(val) && val < new Date().getFullYear()) {
                         next = '&yrh=' + val;
                     }
                     break;

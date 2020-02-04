@@ -10,12 +10,16 @@ const getItemProp = (name, elem) => {
 };
 
 const getUrl = el => {
-    const a = el.querySelector('[itemprop="url"]');
+    const a = el.querySelector('[itemprop="url"]') || el.querySelector('a.thumbnail');
     return a && `https://www.abebooks.com${a.attributes.href}`;
 };
 
 const getItemPrice = el => {
-    const price = el.querySelector('.srp-item-price') || el.querySelector('.price');
+    let price = getItemProp('price', el);
+    if (price) {
+        return price;
+    }
+    price = el.querySelector('.srp-item-price') || el.querySelector('.price')
     if (price) {
         return price.innerHTML.substr(4);
     }
@@ -23,11 +27,15 @@ const getItemPrice = el => {
 };
 
 const getItemShipping = el => {
-    const shipping = el.querySelector('.srp-item-price-shipping') ||
-        el.querySelector('.shipping .price');
+    const shipping = el.querySelector('.srp-item-price-shipping') || el.querySelector('.shipping .price');
 
     if (shipping) {
         return shipping.text.substr(4);
+    }
+
+    const freeShipping = el.querySelector('.free-shipping')
+    if (freeShipping) {
+        return '0.00';
     }
     return '';
 };
