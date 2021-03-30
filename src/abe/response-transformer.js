@@ -27,18 +27,17 @@ const getItemPrice = el => {
 };
 
 const getItemShipping = el => {
-  const shipping =
-    el.querySelector(".srp-item-price-shipping") ||
-    el.querySelector(".shipping .price");
+  const shipping = el.querySelector(".item-shipping");
 
   if (shipping) {
-    return shipping.text.substr(4);
+    const amount = shipping.text.match(/US\$ ([\d.]+)/);
+    if (amount) {
+      return +amount[1];
+    } else if (/Free shipping/i.test(shipping.text)) {
+      return 0.0;
+    }
   }
 
-  const freeShipping = el.querySelector(".free-shipping");
-  if (freeShipping) {
-    return "0.00";
-  }
   return "";
 };
 
@@ -52,7 +51,7 @@ const getItemImage = el => {
 
 module.exports = document => {
   return document
-    .querySelectorAll(".cf.result")
+    .querySelectorAll(".cf.result-item")
     .map(el =>
       toResult({
         year: getItemProp("datePublished", el),
