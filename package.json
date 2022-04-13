@@ -15,7 +15,7 @@
   "dependencies": {
     "@dillonchr/domget": "^1.0.0",
     "@dillonchr/fetch": "^1.0.1",
-    "async": "^2.6.1"
+    "async": "^3.2.2"
   },
   "devDependencies": {
     "tape": "^4.13.0"
